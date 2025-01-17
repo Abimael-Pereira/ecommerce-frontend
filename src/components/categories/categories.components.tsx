@@ -6,7 +6,6 @@ import { categoryConverter } from '../../converters/firestore.converters';
 import Category from '../../types/category.types';
 import CategoryItem from './category-item/category-item.component';
 
-import './categories.styles.css';
 import { CategoriesContainer, CategoriesContent } from './categories.styles';
 
 const Categories = () => {
