@@ -4,6 +4,7 @@ import { db } from '../../config/firebase.config';
 import { categoryConverter } from '../../converters/firestore.converters';
 
 import Category from '../../types/category.types';
+import CategoryItem from './category-item/category-item.component';
 
 import './categories.styles.css';
 
@@ -34,7 +35,13 @@ const Categories = () => {
 
   return (
     <div className="categories-container">
-      <div className="categories-content"></div>
+      <div className="categories-content">
+        {categories.map((category) => (
+          <div>
+            <CategoryItem key={category.id} category={category} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
