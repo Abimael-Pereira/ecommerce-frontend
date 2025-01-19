@@ -1,10 +1,12 @@
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
+import isEmail from 'validator/lib/isEmail';
 
 import CustomButton from '../../components/custom-buttom/custom-button.component';
 import CutomInput from '../../components/custom-input/custom-input.component';
 import Header from '../../components/header/header.component';
+import InputErrorMessage from '../../components/input-error-message/input-error-message.component';
 
 import {
   LoginContainer,
@@ -45,8 +47,14 @@ const LoginPage = () => {
             <CutomInput
               $hasError={!!errors?.email}
               placeholder="Digite seu e-mail"
-              {...register('email', { required: true })}
+              {...register('email', { required: true, validate: isEmail })}
             />
+            {errors?.email?.type === 'required' && (
+              <InputErrorMessage>E-mail é obrigatória</InputErrorMessage>
+            )}
+            {errors?.email?.type === 'validate' && (
+              <InputErrorMessage>Insira um e-mail válido</InputErrorMessage>
+            )}
           </LoginInputContainer>
 
           <LoginInputContainer>
@@ -57,6 +65,9 @@ const LoginPage = () => {
               type="password"
               {...register('password', { required: true })}
             />
+            {errors?.password && (
+              <InputErrorMessage>Senha é obrigatória</InputErrorMessage>
+            )}
           </LoginInputContainer>
 
           <CustomButton
