@@ -1,5 +1,6 @@
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
+import { useForm } from 'react-hook-form';
 
 import CustomButton from '../../components/custom-buttom/custom-button.component';
 import CutomInput from '../../components/custom-input/custom-input.component';
@@ -14,6 +15,17 @@ import {
 } from './login.styles';
 
 const LoginPage = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSubmitPress = (data: any) => {
+    console.log({ data });
+  };
+
   return (
     <>
       <Header />
@@ -30,15 +42,29 @@ const LoginPage = () => {
 
           <LoginInputContainer>
             <p>E-mail</p>
-            <CutomInput placeholder="Digite seu e-mail" />
+            <CutomInput
+              $hasError={!!errors?.email}
+              placeholder="Digite seu e-mail"
+              {...register('email', { required: true })}
+            />
           </LoginInputContainer>
 
           <LoginInputContainer>
             <p>Senha</p>
-            <CutomInput placeholder="Digite sua senha" type="password" />
+            <CutomInput
+              $hasError={!!errors?.password}
+              placeholder="Digite sua senha"
+              type="password"
+              {...register('password', { required: true })}
+            />
           </LoginInputContainer>
 
-          <CustomButton startIcon={<FiLogIn size={18} />}>Entrar</CustomButton>
+          <CustomButton
+            onClick={() => handleSubmit(handleSubmitPress)()}
+            startIcon={<FiLogIn size={18} />}
+          >
+            Entrar
+          </CustomButton>
         </LoginContent>
       </LoginContainer>
     </>
