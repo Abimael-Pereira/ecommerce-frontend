@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import isEmail from 'validator/lib/isEmail';
 
 import CustomButton from '../../components/custom-buttom/custom-button.component';
-import CutomInput from '../../components/custom-input/custom-input.component';
+import CustomInput from '../../components/custom-input/custom-input.component';
 import Header from '../../components/header/header.component';
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component';
 
@@ -44,7 +44,7 @@ const LoginPage = () => {
 
           <LoginInputContainer>
             <p>E-mail</p>
-            <CutomInput
+            <CustomInput
               $hasError={!!errors?.email}
               placeholder="Digite seu e-mail"
               {...register('email', { required: true, validate: isEmail })}
@@ -59,7 +59,7 @@ const LoginPage = () => {
 
           <LoginInputContainer>
             <p>Senha</p>
-            <CutomInput
+            <CustomInput
               $hasError={!!errors?.password}
               placeholder="Digite sua senha"
               type="password"
