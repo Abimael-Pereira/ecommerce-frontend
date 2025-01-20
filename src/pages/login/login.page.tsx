@@ -1,7 +1,7 @@
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
-import isEmail from 'validator/lib/isEmail';
+import validator from 'validator';
 
 import CustomButton from '../../components/custom-buttom/custom-button.component';
 import CustomInput from '../../components/custom-input/custom-input.component';
@@ -16,15 +16,19 @@ import {
   LoginSubtitle,
 } from './login.styles';
 
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<LoginForm>();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmitPress = (data: any) => {
+  const handleSubmitPress = (data: LoginForm) => {
     console.log({ data });
   };
 
@@ -47,7 +51,12 @@ const LoginPage = () => {
             <CustomInput
               $hasError={!!errors?.email}
               placeholder="Digite seu e-mail"
-              {...register('email', { required: true, validate: isEmail })}
+              {...register('email', {
+                required: true,
+                validate: (value) => {
+                  return validator.isEmail(value);
+                },
+              })}
             />
             {errors?.email?.type === 'required' && (
               <InputErrorMessage>E-mail é obrigatória</InputErrorMessage>
