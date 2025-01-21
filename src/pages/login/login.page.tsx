@@ -15,6 +15,12 @@ import {
   LoginInputContainer,
   LoginSubtitle,
 } from './login.styles';
+import { auth } from '../../config/firebase.config';
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 
 interface LoginForm {
   email: string;
@@ -25,11 +31,27 @@ const LoginPage = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<LoginForm>();
 
-  const handleSubmitPress = (data: LoginForm) => {
-    console.log({ data });
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+      console.log(userCredentials);
+    } catch (error) {
+      const _error = error as AuthError;
+      if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+        setError('password', {
+          type: 'mismatch',
+        });
+        setError('email', { type: 'mismatch' });
+      }
+    }
   };
 
   return (
@@ -74,8 +96,12 @@ const LoginPage = () => {
               type="password"
               {...register('password', { required: true })}
             />
-            {errors?.password && (
+            {errors?.password?.type === 'required' && (
               <InputErrorMessage>Senha é obrigatória</InputErrorMessage>
+            )}
+
+            {errors?.password?.type === 'mismatch' && (
+              <InputErrorMessage>O e-mail ou a senha estão incorretos</InputErrorMessage>
             )}
           </LoginInputContainer>
 
