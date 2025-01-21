@@ -1,7 +1,11 @@
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  AuthError,
+  createUserWithEmailAndPassword,
+  AuthErrorCodes,
+} from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
 
 import CustomButton from '../../components/custom-buttom/custom-button.component';
@@ -30,6 +34,7 @@ const SignUpPage = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     watch,
   } = useForm<SignUpForm>();
@@ -51,7 +56,11 @@ const SignUpPage = () => {
         email: userCredentials.user.email,
       });
     } catch (error) {
-      console.error(error);
+      const _error = error as AuthError;
+
+      if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        return setError('email', { type: 'alreadyInUse' });
+      }
     }
   };
 
@@ -107,6 +116,12 @@ const SignUpPage = () => {
 
             {errors?.email?.type === 'validate' && (
               <InputErrorMessage>Insira um e-mail válido</InputErrorMessage>
+            )}
+
+            {errors?.email?.type === 'alreadyInUse' && (
+              <InputErrorMessage>
+                Esse e-mail já está sendo utilizado
+              </InputErrorMessage>
             )}
           </SignUpInputContainer>
 
