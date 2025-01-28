@@ -1,15 +1,9 @@
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { auth, db, googleProvider } from '../../config/firebase.config';
-import {
-  AuthError,
-  AuthErrorCodes,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from 'firebase/auth';
 
 import CustomButton from '../../components/custom-buttom/custom-button.component';
 import CustomInput from '../../components/custom-input/custom-input.component';
@@ -24,13 +18,32 @@ import {
   LoginSubtitle,
 } from './login.styles';
 
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
+import { auth, db, googleProvider } from '../../config/firebase.config';
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import UserContext from '../../contexts/user.context';
+
 interface LoginForm {
   email: string;
   password: string;
 }
 
 const LoginPage = () => {
-  
+  const { isAuthenticated } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated]);
+
   const {
     register,
     handleSubmit,
