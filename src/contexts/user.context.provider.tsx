@@ -6,6 +6,7 @@ import UserContext from './user.context';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { auth, db } from '../config/firebase.config';
+import { userConverter } from '../converters/firestore.converters';
 
 interface ChildrenProps {
   children: ReactNode;
@@ -32,12 +33,15 @@ const UserContextProvider: FunctionComponent<ChildrenProps> = ({
         logoutUser();
       } else if (!isAuthenticated && user) {
         const querySnapshot = await getDocs(
-          query(collection(db, 'users'), where('id', '==', user.uid)),
+          query(
+            collection(db, 'users').withConverter(userConverter),
+            where('id', '==', user.uid),
+          ),
         );
 
         const userFromFirestore = querySnapshot.docs[0]?.data();
         if (userFromFirestore) {
-          loginUser(userFromFirestore as User);
+          loginUser(userFromFirestore);
         }
       }
     });
