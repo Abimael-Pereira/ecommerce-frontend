@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react';
 import { Container } from './categories-overview.styles';
 
 import CategoryContext from '../../contexts/category.context';
+import CategoryOverview from '../category-overview/category-overview.component';
 
 
 const CategoriesOverview = () => {
@@ -17,9 +18,7 @@ const CategoriesOverview = () => {
   return (
     <Container>
       {categories.map((category) => (
-        <div key={category.id}>
-          <h1>{category.name}</h1>
-        </div>
+        <CategoryOverview key={category.id} category={category} />
       ))}
     </Container>
   );
