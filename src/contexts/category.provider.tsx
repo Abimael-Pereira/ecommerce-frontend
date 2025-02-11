@@ -1,23 +1,14 @@
-import { createContext, ReactNode, useState } from 'react';
-import Category from '../types/category.types';
+import { ReactNode, useState } from 'react';
 
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase.config';
 import { categoryConverter } from '../converters/firestore.converters';
-
-interface ICategoryContext {
-  categories: Category[];
-  fetchCategories: () => Promise<void>;
-}
+import Category from '../types/category.types';
+import CategoryContext from './category.context';
 
 interface ChildrenProps {
   children: ReactNode;
 }
-
-export const CategoryContext = createContext<ICategoryContext>({
-  categories: [],
-  fetchCategories: () => Promise.resolve(),
-});
 
 const CategoryContextProvider: React.FC<ChildrenProps> = ({ children }) => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -34,7 +25,7 @@ const CategoryContextProvider: React.FC<ChildrenProps> = ({ children }) => {
         categoriesFromFirestore.push(doc.data());
       });
 
-      setCategories(categoriesFromFirestore);
+      setCategories(categoriesFromFirestore);      
     } catch (error) {
       console.log(error);
     }
