@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 
-import CategoryItem from './category-item/category-item.component';
+import CategoryItem from '../category-item/category-item.component';
 
 import { CategoriesContainer, CategoriesContent } from './categories.styles';
 import CategoryContext from '../../contexts/category.context';
