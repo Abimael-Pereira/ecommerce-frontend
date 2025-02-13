@@ -11,6 +11,8 @@ import ExplorePage from './pages/explore/explore.page';
 import CategoryContextProvider from './contexts/category-provider';
 import CartContextProvider from './contexts/cart.context-provider';
 
+import CartComponent from './components/cart/cart.component';
+
 const App: FunctionComponent = () => {
   return (
     <UserContextProvider>
@@ -24,6 +26,8 @@ const App: FunctionComponent = () => {
               <Route path="/explore" element={<ExplorePage />} />
               <Route path="/category/:id" element={<CategoryDetailsPage />} />
             </Routes>
+
+            <CartComponent />
           </BrowserRouter>
         </CartContextProvider>
       </CategoryContextProvider>
