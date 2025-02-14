@@ -19,11 +19,33 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
   };
 
   const addProductToCart = (product: Products) => {
-    setProducts((prevState) => [...prevState, { ...product, quantity: 1 }]);
+    const productAlreadyInCart = products.some(
+      (item) => item.id === product.id,
+    );
+
+    if (productAlreadyInCart) {
+      return setProducts((products) =>
+        products.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        ),
+      );
+    }
+
+    setProducts((products) => [
+      ...products,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ]);
   };
 
   return (
-    <CartContext.Provider value={{ isVisible, products, toggleCart, addProductToCart }}>
+    <CartContext.Provider
+      value={{ isVisible, products, toggleCart, addProductToCart }}
+    >
       {children}
     </CartContext.Provider>
   );
