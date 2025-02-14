@@ -48,6 +48,16 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
     );
   };
 
+  const increaseProductQuantity = (productId: string) => {
+    setProducts((products) =>
+      products.map((product) =>
+        product.id === productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product,
+      ),
+    );
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -56,6 +66,7 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
         toggleCart,
         addProductToCart,
         removeProductFromCart,
+        increaseProductQuantity,
       }}
     >
       {children}
