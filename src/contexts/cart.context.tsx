@@ -4,6 +4,7 @@ import CartProduct from "../types/cart.types";
 interface ICartContext {
     isVisible: boolean;
     productsTotalPrice: number;
+    productsCount: number;
     products: CartProduct[];
     addProductToCart: (product: CartProduct) => void;
     toggleCart: () => void;
@@ -16,6 +17,7 @@ const CartContext = createContext<ICartContext>({
     isVisible: false,
     products: [],
     productsTotalPrice: 0,
+    productsCount: 0,
     addProductToCart: () => {},
     toggleCart: () => {},
     removeProductFromCart: () => {},

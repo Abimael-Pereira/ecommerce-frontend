@@ -20,6 +20,11 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
     }, 0);
   }, [products]);
 
+  const productsCount = useMemo(() => {
+    return products.reduce((acc, currentProduct) => {
+      return acc + currentProduct.quantity;
+    }, 0);
+  }, [products]);
 
   const toggleCart = () => {
     setIsVisible((prevState) => !prevState);
@@ -83,6 +88,7 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
         isVisible,
         products,
         productsTotalPrice,
+        productsCount,
         toggleCart,
         addProductToCart,
         removeProductFromCart,
