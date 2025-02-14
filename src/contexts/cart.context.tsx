@@ -6,6 +6,7 @@ interface ICartContext {
     products: CartProduct[];
     addProductToCart: (product: CartProduct) => void;
     toggleCart: () => void;
+    removeProductFromCart: (productId: string) => void;
 }
 
 const CartContext = createContext<ICartContext>({
@@ -13,6 +14,7 @@ const CartContext = createContext<ICartContext>({
     products: [],
     addProductToCart: () => {},
     toggleCart: () => {},
+    removeProductFromCart: () => {},
 });
 
 export default CartContext;

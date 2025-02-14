@@ -42,9 +42,21 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
     ]);
   };
 
+  const removeProductFromCart = (productId: string) => {
+    setProducts((products) =>
+      products.filter((product) => product.id !== productId),
+    );
+  };
+
   return (
     <CartContext.Provider
-      value={{ isVisible, products, toggleCart, addProductToCart }}
+      value={{
+        isVisible,
+        products,
+        toggleCart,
+        addProductToCart,
+        removeProductFromCart,
+      }}
     >
       {children}
     </CartContext.Provider>
