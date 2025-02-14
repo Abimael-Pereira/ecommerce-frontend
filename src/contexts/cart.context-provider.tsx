@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactNode, useState } from 'react';
+import { FunctionComponent, ReactNode, useMemo, useState } from 'react';
 
 import CartContext from './cart.context';
 import Products from '../types/products.type';
@@ -13,6 +13,13 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [products, setProducts] = useState<CartProduct[]>([]);
+
+  const productsTotalPrice = useMemo(() => {
+    return products.reduce((acc, currentProduct) => {
+      return acc + currentProduct.price * currentProduct.quantity;
+    }, 0);
+  }, [products]);
+
 
   const toggleCart = () => {
     setIsVisible((prevState) => !prevState);
@@ -56,23 +63,26 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
           : product,
       ),
     );
-  }
+  };
 
   const decreaseProductQuantity = (productId: string) => {
     setProducts((products) =>
-      products.map((product) =>
-        product.id === productId
-          ? { ...product, quantity: product.quantity - 1 }
-          : product,
-      ).filter((product) => product.quantity > 0),
+      products
+        .map((product) =>
+          product.id === productId
+            ? { ...product, quantity: product.quantity - 1 }
+            : product,
+        )
+        .filter((product) => product.quantity > 0),
     );
-  }
+  };
 
   return (
     <CartContext.Provider
       value={{
         isVisible,
         products,
+        productsTotalPrice,
         toggleCart,
         addProductToCart,
         removeProductFromCart,
