@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import CartContext from '../../contexts/cart.context';
 
 import CustomButton from '../custom-buttom/custom-button.component';
+import CartItem from '../cart-item/cart-item.component';
 
 import {
   CartContainer,
@@ -14,14 +15,17 @@ import {
 } from './car.styles';
 
 const CartComponent = () => {
-  const { isVisible, toggleCart } = useContext(CartContext);
+  const { isVisible, products, toggleCart } = useContext(CartContext);
 
   return (
     <CartContainer isVisible={isVisible}>
       <CartEscapeArea onClick={toggleCart} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
-        {/* Cart items */}
+
+        {products.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))}
 
         <CartTotal>Total: R$ 0,00</CartTotal>
 
