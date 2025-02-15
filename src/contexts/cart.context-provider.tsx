@@ -1,4 +1,10 @@
-import { FunctionComponent, ReactNode, useMemo, useState } from 'react';
+import {
+  FunctionComponent,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
 import CartContext from './cart.context';
 import Products from '../types/products.type';
@@ -13,6 +19,19 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [products, setProducts] = useState<CartProduct[]>([]);
+
+  useEffect(() => {
+    const cartProducts = localStorage.getItem('cartProducts');
+
+    if (cartProducts) {
+      const parsedProducts = JSON.parse(cartProducts);
+      setProducts(parsedProducts);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cartProducts', JSON.stringify(products));
+  }, [products]);
 
   const productsTotalPrice = useMemo(() => {
     return products.reduce((acc, currentProduct) => {
@@ -36,22 +55,22 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
     );
 
     if (productAlreadyInCart) {
-      return setProducts((products) =>
+      setProducts((products) =>
         products.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item,
         ),
       );
+    } else {
+      setProducts((products) => [
+        ...products,
+        {
+          ...product,
+          quantity: 1,
+        },
+      ]);
     }
-
-    setProducts((products) => [
-      ...products,
-      {
-        ...product,
-        quantity: 1,
-      },
-    ]);
   };
 
   const removeProductFromCart = (productId: string) => {

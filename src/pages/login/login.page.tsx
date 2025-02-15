@@ -58,7 +58,7 @@ const LoginPage = () => {
         data.email,
         data.password,
       );
-      console.log(userCredentials);
+      console.log({userCredentials});
     } catch (error) {
       const _error = error as AuthError;
       if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
