@@ -13,6 +13,7 @@ import CategoryContextProvider from './contexts/category-provider';
 import CartContextProvider from './contexts/cart.context-provider';
 
 import CartComponent from './components/cart/cart.component';
+import AuthenticationGuard from './guards/authentication.guard';
 
 const App: FunctionComponent = () => {
   return (
@@ -25,7 +26,14 @@ const App: FunctionComponent = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/sign-up" element={<SignUpPage />} />
               <Route path="/explore" element={<ExplorePage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
+              <Route
+                path="/checkout"
+                element={
+                  <AuthenticationGuard>
+                    <CheckoutPage />
+                  </AuthenticationGuard>
+                }
+              />
               <Route path="/category/:id" element={<CategoryDetailsPage />} />
             </Routes>
 
