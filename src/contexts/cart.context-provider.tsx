@@ -100,6 +100,10 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
         .filter((product) => product.quantity > 0),
     );
   };
+  
+  const clearCart = () => {
+    setProducts([]);
+  };
 
   return (
     <CartContext.Provider
@@ -113,6 +117,7 @@ const CartContextProvider: FunctionComponent<CartContextProviderProps> = ({
         removeProductFromCart,
         increaseProductQuantity,
         decreaseProductQuantity,
+        clearCart
       }}
     >
       {children}

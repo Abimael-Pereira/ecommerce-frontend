@@ -13,6 +13,7 @@ const Colors = {
     background: '#E9ECEF',
   },
   error: '#FF6A6A',
+  success: '#198754',
 };
 
 export default Colors;

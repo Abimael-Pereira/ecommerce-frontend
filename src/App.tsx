@@ -7,6 +7,7 @@ import SignUpPage from './pages/sign-up/sign-up.page';
 import CategoryDetailsPage from './pages/category-details/category-datails.page';
 import ExplorePage from './pages/explore/explore.page';
 import CheckoutPage from './pages/checkout/checkout.page';
+import PaymentConfirmationPage from './pages/payment-confirmation/payment-confirmantion.page';
 
 import UserContextProvider from './contexts/user.context-provider';
 import CategoryContextProvider from './contexts/category-provider';
@@ -33,6 +34,10 @@ const App: FunctionComponent = () => {
                     <CheckoutPage />
                   </AuthenticationGuard>
                 }
+              />
+              <Route
+                path="/payment-confirmation"
+                element={<PaymentConfirmationPage />}
               />
               <Route path="/category/:id" element={<CategoryDetailsPage />} />
             </Routes>

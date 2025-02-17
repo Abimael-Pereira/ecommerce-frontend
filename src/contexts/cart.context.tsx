@@ -11,6 +11,7 @@ interface ICartContext {
     removeProductFromCart: (productId: string) => void;
     increaseProductQuantity: (productId: string) => void;
     decreaseProductQuantity: (productId: string) => void;
+    clearCart: () => void;
 }
 
 const CartContext = createContext<ICartContext>({
@@ -23,6 +24,7 @@ const CartContext = createContext<ICartContext>({
     removeProductFromCart: () => {},
     increaseProductQuantity: () => {},
     decreaseProductQuantity: () => {},
+    clearCart: () => {},
 });
 
 export default CartContext;
