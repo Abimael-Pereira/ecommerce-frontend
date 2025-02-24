@@ -1,8 +1,8 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Container = styled.div`
   padding: 0px 40px 20px 40px;
-`
+`;
 
 export const CategoryTitle = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ export const CategoryTitle = styled.div`
     font-size: 21px;
     font-weight: 500;
   }
-`
+`;
 
 export const ProductsContainer = styled.div`
   display: grid;
@@ -21,7 +21,12 @@ export const ProductsContainer = styled.div`
   justify-items: start;
   margin-top: 5px;
   grid-row-gap: 20px;
-`
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
 
 export const IconContainer = styled.div`
   display: flex;
@@ -29,4 +34,4 @@ export const IconContainer = styled.div`
   &:hover {
     cursor: pointer;
   }
-`
+`;
