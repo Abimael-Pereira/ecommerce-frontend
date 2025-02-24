@@ -1,6 +1,5 @@
 import { FunctionComponent } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
 import HomePage from './pages/home/home.page';
 import LoginPage from './pages/login/login.page';
@@ -16,41 +15,38 @@ import CartContextProvider from './contexts/cart.context-provider';
 
 import CartComponent from './components/cart/cart.component';
 import AuthenticationGuard from './guards/authentication.guard';
-import store from './store/store';
 
 const App: FunctionComponent = () => {
   return (
-    <Provider store={store}>
-      <UserContextProvider>
-        <CategoryContextProvider>
-          <CartContextProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/sign-up" element={<SignUpPage />} />
-                <Route path="/explore" element={<ExplorePage />} />
-                <Route
-                  path="/checkout"
-                  element={
-                    <AuthenticationGuard>
-                      <CheckoutPage />
-                    </AuthenticationGuard>
-                  }
-                />
-                <Route
-                  path="/payment-confirmation"
-                  element={<PaymentConfirmationPage />}
-                />
-                <Route path="/category/:id" element={<CategoryDetailsPage />} />
-              </Routes>
+    <UserContextProvider>
+      <CategoryContextProvider>
+        <CartContextProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/sign-up" element={<SignUpPage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route
+                path="/checkout"
+                element={
+                  <AuthenticationGuard>
+                    <CheckoutPage />
+                  </AuthenticationGuard>
+                }
+              />
+              <Route
+                path="/payment-confirmation"
+                element={<PaymentConfirmationPage />}
+              />
+              <Route path="/category/:id" element={<CategoryDetailsPage />} />
+            </Routes>
 
-              <CartComponent />
-            </BrowserRouter>
-          </CartContextProvider>
-        </CategoryContextProvider>
-      </UserContextProvider>
-    </Provider>
+            <CartComponent />
+          </BrowserRouter>
+        </CartContextProvider>
+      </CategoryContextProvider>
+    </UserContextProvider>
   );
 };
 
