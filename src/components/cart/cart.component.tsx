@@ -13,7 +13,7 @@ import {
   CartEscapeArea,
   CartTitle,
   CartTotal,
-} from './car.styles';
+} from './cart.styles';
 
 const CartComponent = () => {
   const { isVisible, products, productsTotalPrice, productsCount, toggleCart } =
