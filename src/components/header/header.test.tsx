@@ -4,60 +4,29 @@ import { BrowserRouter } from 'react-router-dom';
 import Header from './header.component';
 
 import UserContext from '../../contexts/user.context';
-import User from '../../types/user.types';
 import CartProduct from '../../types/cart.types';
 import CartContext from '../../contexts/cart.context';
-
-const userTest: User = {
-  id: '1',
-  firstName: 'Test',
-  lastName: 'User',
-  email: 'test.user@gmail',
-  provider: 'firebase',
-};
+import {
+  createCartContextValue,
+  createUserContextValue,
+} from '../helpers/test.helper';
 
 const productsTest: CartProduct[] = [
   {
     id: '1',
     name: 'Product 1',
     price: 10,
-    quantity: 3,
+    quantity: 4,
     imageUrl: 'https://test.com/image.png',
   },
   {
     id: '2',
     name: 'Product 2',
     price: 20,
-    quantity: 2,
+    quantity: 6,
     imageUrl: 'https://test.com/image.png',
   },
 ];
-
-const createUserContextValue = (isAuthenticated = false) => ({
-  isAuthenticated,
-  currentUser: isAuthenticated ? userTest : null,
-  loginUser: jest.fn(),
-  logoutUser: jest.fn(),
-});
-
-const createCartContextValue = (products: CartProduct[] = []) => {
-  const toggleCart = jest.fn();
-  return {
-    isVisible: false,
-    productsTotalPrice: products.reduce(
-      (acc, product) => acc + product.price * product.quantity,
-      0,
-    ),
-    productsCount: products.reduce((acc, product) => acc + product.quantity, 0),
-    products: products,
-    addProductToCart: jest.fn(),
-    toggleCart: toggleCart,
-    removeProductFromCart: jest.fn(),
-    increaseProductQuantity: jest.fn(),
-    decreaseProductQuantity: jest.fn(),
-    clearCart: jest.fn(),
-  };
-};
 
 const HeaderWithContexts = ({
   isAuthenticated = false,
@@ -91,6 +60,6 @@ describe('Header', () => {
   it('should show correct cart products count', () => {
     render(<HeaderWithContexts products={productsTest} />);
 
-    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(screen.getByText('10')).toBeInTheDocument();
   });
 });
