@@ -33,5 +33,14 @@ describe('Cart', () => {
     expect(screen.getByText('R$50')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument();
     expect(screen.getByText(/total.*r\$.*100/i)).toBeInTheDocument();
+    expect(screen.getByText(/ir para o checkout/i)).toBeInTheDocument();
+  });
+
+  it('should not show checkout button and should show empty cart message if cart is empty', () => {
+    render(<CartWithContexts />);
+
+    expect(screen.getByText(/seu carrinho está vazio/i)).toBeInTheDocument();
+    expect(screen.queryByText(/ir para o checkout/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/total/i)).not.toBeInTheDocument();
   });
 });
