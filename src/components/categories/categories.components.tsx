@@ -10,14 +10,14 @@ const Categories = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [fetchCategories]);
 
   return (
     <CategoriesContainer>
       <CategoriesContent>
         {categories.map((category) => (
-          <div>
-            <CategoryItem key={category.id} category={category} />
+          <div key={category.id}>
+            <CategoryItem category={category} />
           </div>
         ))}
       </CategoriesContent>
