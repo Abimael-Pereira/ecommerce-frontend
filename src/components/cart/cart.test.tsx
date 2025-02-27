@@ -53,4 +53,13 @@ describe('Cart', () => {
 
     expect(screen.getByText('6')).toBeInTheDocument();
   });
+
+  it('should decrease product quantity when clicking on minus button', async () => {
+    render(<CartWithContexts products={productsTest} />);
+
+    const decreaseButton = screen.getByLabelText(/deacrease quantity of boné/i);
+    await userEvent.click(decreaseButton);
+
+    expect(screen.getByText('4')).toBeInTheDocument();
+  });
 });
