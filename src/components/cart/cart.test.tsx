@@ -52,6 +52,7 @@ describe('Cart', () => {
     await userEvent.click(increaseButton);
 
     expect(screen.getByText('6')).toBeInTheDocument();
+    expect(screen.getByText(/total.*r\$.*300/i)).toBeInTheDocument();
   });
 
   it('should decrease product quantity when clicking on minus button', async () => {
@@ -61,6 +62,7 @@ describe('Cart', () => {
     await userEvent.click(decreaseButton);
 
     expect(screen.getByText('4')).toBeInTheDocument();
+    expect(screen.getByText(/total.*r\$.*200/i)).toBeInTheDocument();
   });
 
   it('should remove product from cart when clicking on remove button', async () => {
