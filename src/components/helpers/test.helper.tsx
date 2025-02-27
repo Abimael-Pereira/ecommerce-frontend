@@ -42,6 +42,12 @@ export const createCartContextValue = (initialProducts: CartProduct[] = []) => {
     );
   };
 
+  const removeProductFromCart = (productId: string) => {
+    setProducts((products) =>
+      products.filter((product) => product.id !== productId),
+    );
+  };
+
   const toggleCart = jest.fn();
   return {
     isVisible: false,
@@ -53,7 +59,7 @@ export const createCartContextValue = (initialProducts: CartProduct[] = []) => {
     products: products,
     addProductToCart: jest.fn(),
     toggleCart: toggleCart,
-    removeProductFromCart: jest.fn(),
+    removeProductFromCart,
     increaseProductQuantity,
     decreaseProductQuantity,
     clearCart: jest.fn(),
