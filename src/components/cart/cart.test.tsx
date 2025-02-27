@@ -4,13 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import CartContext from '../../contexts/cart.context';
 import { createCartContextValue } from '../helpers/test.helper';
 import CartProduct from '../../types/cart.types';
+import userEvent from '@testing-library/user-event';
 
 const productsTest: CartProduct[] = [
   {
     id: '1',
     name: 'Boné',
     price: 50,
-    quantity: 2,
+    quantity: 5,
     imageUrl: 'https://test.com/image.png',
   },
 ];
@@ -42,5 +43,14 @@ describe('Cart', () => {
     expect(screen.getByText(/seu carrinho está vazio/i)).toBeInTheDocument();
     expect(screen.queryByText(/ir para o checkout/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/total/i)).not.toBeInTheDocument();
+  });
+
+  it('should increase product quantity when clicking on plus button', async () => {
+    render(<CartWithContexts products={productsTest} />);
+
+    const increaseButton = screen.getByLabelText(/increase quantity of boné/i);
+    await userEvent.click(increaseButton);
+
+    expect(screen.getByText('6')).toBeInTheDocument();
   });
 });
