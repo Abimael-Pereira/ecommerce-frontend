@@ -32,8 +32,8 @@ describe('Cart', () => {
 
     expect(screen.getByText(/boné/i)).toBeInTheDocument();
     expect(screen.getByText('R$50')).toBeInTheDocument();
-    expect(screen.getByText('2')).toBeInTheDocument();
-    expect(screen.getByText(/total.*r\$.*100/i)).toBeInTheDocument();
+    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(screen.getByText(/total.*r\$.*250/i)).toBeInTheDocument();
     expect(screen.getByText(/ir para o checkout/i)).toBeInTheDocument();
   });
 
@@ -61,5 +61,15 @@ describe('Cart', () => {
     await userEvent.click(decreaseButton);
 
     expect(screen.getByText('4')).toBeInTheDocument();
+  });
+
+  it('should remove product from cart when clicking on remove button', async () => {
+    render(<CartWithContexts products={productsTest} />);
+
+    const removeButton = screen.getByLabelText(/remove boné/i);
+    await userEvent.click(removeButton);
+
+    expect(screen.queryByText(/boné/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/seu carrinho está vazio/i)).toBeInTheDocument();
   });
 });
