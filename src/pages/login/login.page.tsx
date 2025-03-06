@@ -130,7 +130,7 @@ const LoginPage = () => {
               })}
             />
             {errors?.email?.type === 'required' && (
-              <InputErrorMessage>E-mail é obrigatória</InputErrorMessage>
+              <InputErrorMessage>E-mail é obrigatório</InputErrorMessage>
             )}
             {errors?.email?.type === 'validate' && (
               <InputErrorMessage>Insira um e-mail válido</InputErrorMessage>
@@ -159,6 +159,7 @@ const LoginPage = () => {
           <CustomButton
             onClick={() => handleSubmit(handleSubmitPress)()}
             startIcon={<FiLogIn size={18} />}
+            data-testid="login-submit"
           >
             Entrar
           </CustomButton>
