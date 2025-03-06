@@ -12,7 +12,6 @@ describe('Sign Up', () => {
     );
 
     const submitButton = screen.getByRole('button', { name: 'Criar conta' });
-
     await userEvent.click(submitButton);
 
     await screen.findByText('Nome é obrigatório');
@@ -30,13 +29,32 @@ describe('Sign Up', () => {
     );
 
     const emailInput = screen.getByPlaceholderText('Digite seu e-mail');
-
     await userEvent.type(emailInput, 'invalid-email');
 
     const submitButton = screen.getByRole('button', { name: 'Criar conta' });
-
     await userEvent.click(submitButton);
 
     await screen.findByText('Insira um e-mail válido');
+  });
+
+  it('should show error when password and password confirmation are different', async () => {
+    render(
+      <BrowserRouter>
+        <SignUpPage />
+      </BrowserRouter>,
+    );
+
+    const passwordInput = screen.getByPlaceholderText('Digite sua senha');
+    const passwordConfirmInput = screen.getByPlaceholderText(
+      'Digite novamente sua senha',
+    );
+
+    await userEvent.type(passwordInput, '123456');
+    await userEvent.type(passwordConfirmInput, 'abcdef');
+
+    const submitButton = screen.getByRole('button', { name: 'Criar conta' });
+    await userEvent.click(submitButton);
+
+    await screen.findByText('As senhas não são iguais');
   });
 });
