@@ -57,4 +57,20 @@ describe('Sign Up', () => {
 
     await screen.findByText('As senhas não são iguais');
   });
+
+  it('should show error when password has less then 6 characters', async () => {
+    render(
+      <BrowserRouter>
+        <SignUpPage />
+      </BrowserRouter>,
+    );
+
+    const passwordInput = screen.getByPlaceholderText('Digite sua senha');
+    await userEvent.type(passwordInput, '123');
+
+    const submitButton = screen.getByRole('button', { name: 'Criar conta' });
+    await userEvent.click(submitButton);
+
+    await screen.findByText('Sua senha deve ter no mímino 6 caracteres');
+  });
 });
